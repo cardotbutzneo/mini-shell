@@ -9,7 +9,7 @@
 
 #define MAX_ARGS 20
 #define MAX_INPUT 256
-#define ALLOWED_SIZE 7
+#define ALLOWED_SIZE 8
 #define EXIT_CODE 999
 
 

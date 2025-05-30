@@ -16,10 +16,7 @@ int is_allowed_command(const char *cmd) {
 void print_available_commands() {
     printf("Available commands:\n");
     for (int i = 0; i < ALLOWED_SIZE; i++) {
-        if (i == (ALLOWED_SIZE-1)){
-            printf("  %s ", ALLOWED_COMMANDS[i]);
-        }
-        printf("  %s, ", ALLOWED_COMMANDS[i]);
+        printf("  %s ", ALLOWED_COMMANDS[i]);
     }
     printf("\n");
 }

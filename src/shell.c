@@ -51,7 +51,10 @@ int run_command(char *input_line) {
         print_available_commands();
         return 1;
     }
-
+    if (strcmp(args[0],"clogs") == 0){
+        clear_all_logs();
+        return 1;
+    }
     if (is_allowed_command(args[0]) == 0) {
         printf("Error: command '%s' not allowed\n", args[0]);
         return 1;
@@ -74,6 +77,7 @@ int run_command(char *input_line) {
     } else {
         int status;
         waitpid(pid, &status, 0);
+        log_command(args[0]);
         return WIFEXITED(status) ? WEXITSTATUS(status) : -1;
     }
 }

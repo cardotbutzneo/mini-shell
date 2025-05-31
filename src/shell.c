@@ -43,7 +43,7 @@ int exe_cmd( char *args[]){
     } else {
         int status;
         waitpid(pid, &status, 0);
-        log_command(args[0]);
+        log_command(args[0]); // write the last cmd
         return WIFEXITED(status) ? WEXITSTATUS(status) : -1;
     }
 }
@@ -67,6 +67,7 @@ int run_command(char *input_line) {
         // Empty input
         return 1;
     }
+    
 
     // Built-in exit
     if (strcmp(args[0], "exit") == 0) {
@@ -76,6 +77,7 @@ int run_command(char *input_line) {
     // Built-in help
     if (strcmp(args[0], "help") == 0) {
         print_available_commands();
+        log_command(args[0]); // write the last cmd
         return 1;
     }
     if (strcmp(args[0],"clogs") == 0){
@@ -84,17 +86,21 @@ int run_command(char *input_line) {
     }
     if (strcmp(args[0],"version") == 0){
         printf("%s\n",VERSION);
+        log_command(args[0]); // write the last cmd
         return 1;
     }
     if (strcmp(args[0],"aboutme") == 0){
         print_file("README.md");
+        log_command(args[0]); // write the last cmd
         return 1;
     }
     if (strcmp(args[0],"showlogs") == 0){
         display_all_logs();
+        log_command(args[0]); // write the last cmd
     }
     if (is_allowed_command(args[0]) == 0) {
         printf("Error: command '%s' not allowed\n", args[0]);
+        log_command(args[0]); // write the last cmd
         return 1;
     }
     if (!args){
@@ -108,6 +114,12 @@ int run_command(char *input_line) {
         } else {
             if (chdir(args[1]) != 0) {
                 perror("cd");
+            } 
+            else {
+                // Reconstituer la commande complète pour le log
+                char full_cmd[256] = "cd ";
+                strncat(full_cmd, args[1], sizeof(full_cmd) - strlen(full_cmd) - 1);
+                log_command(full_cmd);
             }
         }
         return 1;

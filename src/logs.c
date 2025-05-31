@@ -1,7 +1,15 @@
 #include "main.h"
 
+void init_log_folder_path() {
+    if (!getcwd(LOG_FOLDER_PATH, sizeof(LOG_FOLDER_PATH))) {
+        perror("getcwd failed");
+        exit(1);
+    }
+    strcat(LOG_FOLDER_PATH, "/log_folder");
+}
+
 int find_last_log_index() {
-    DIR *d = opendir("log_folder");
+    DIR *d = opendir(LOG_FOLDER_PATH);
     struct dirent *entry;
     int max_index = -1;
 
@@ -18,7 +26,7 @@ int find_last_log_index() {
     }
 
     closedir(d);
-    return max_index;
+    return max_index;   
 }
 
 FILE *create_or_get_logfile() {
@@ -27,8 +35,9 @@ FILE *create_or_get_logfile() {
     FILE *file = NULL;
 
     if (index >= 0) {
-        snprintf(filename, sizeof(filename), "%s%d.txt", LOG_PREFIX,index);
+        snprintf(filename, sizeof(filename), "%s/log_%d.txt", LOG_FOLDER_PATH, index);
         file = fopen(filename, "a+");
+
         if (file && count_lines(file) < MAX_LINES) {
             return file;
         }
@@ -43,6 +52,10 @@ FILE *create_or_get_logfile() {
 }
 
 void log_command(const char *command) {
+    if (!command){
+        perror("NULL pointeur");
+        return;
+    }
     FILE *file = create_or_get_logfile();
     if (!file) {
         perror("Unable to open log file");
@@ -60,7 +73,7 @@ void log_command(const char *command) {
 }
 
 void clear_all_logs() {
-    DIR *d = opendir("log_folder");
+    DIR *d = opendir(LOG_FOLDER_PATH);
     struct dirent *entry;
     char filepath[MAX_FILENAME + 32]; // Assez grand pour le chemin complet
 
@@ -83,7 +96,7 @@ void clear_all_logs() {
 }
 
 void display_all_logs() {
-    DIR *d = opendir("log_folder");
+    DIR *d = opendir(LOG_FOLDER_PATH);
     struct dirent *entry;
 
     if (!d) {
@@ -92,14 +105,14 @@ void display_all_logs() {
     }
 
     while ((entry = readdir(d)) != NULL) {
-        // Iterate through directory entries to find log files
-        if (strncmp(entry->d_name, LOG_PREFIX, strlen(LOG_PREFIX)) == 0) {
-            FILE *file = fopen(entry->d_name, "r");
+        if (strncmp(entry->d_name, "log_", strlen("log_")) == 0) {
+            char filepath[MAX_FILENAME + 64];
+            snprintf(filepath, sizeof(filepath), "%s/%s", LOG_FOLDER_PATH, entry->d_name);
+            FILE *file = fopen(filepath, "r");
             if (!file) {
                 perror("fopen failed");
                 continue;
             }
-
             printf("=== %s ===\n", entry->d_name);
             char line[512];
             while (fgets(line, sizeof(line), file)) {

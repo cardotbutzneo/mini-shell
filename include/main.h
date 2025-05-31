@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <limits.h>
 
 #ifndef MAIN_H
 #define MAIN_H
@@ -22,6 +23,7 @@
 
 // List of allowed commands (only names, no args)
 extern const char *ALLOWED_COMMANDS[];
+extern char LOG_FOLDER_PATH[PATH_MAX];
 
 
 int is_allowed_command(const char *cmd);

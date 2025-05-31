@@ -17,7 +17,7 @@
 #define ALLOWED_SIZE 13
 #define EXIT_CODE 999
 #define LOG_PREFIX "log_folder/log_"
-#define VERSION "0.01"
+#define VERSION "1.0.0"
 
 
 

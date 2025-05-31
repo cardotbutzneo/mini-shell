@@ -1,17 +1,5 @@
 #include "main.h"
 
-int count_lines(FILE *file) {
-    int count = 0;
-    int ch;
-
-    rewind(file); // Make sure we start at the beginning
-    while ((ch = fgetc(file)) != EOF) {
-        if (ch == '\n') count++;
-    }
-    rewind(file); // Reset again
-    return count;
-}
-
 int find_last_log_index() {
     DIR *d = opendir("log_folder");
     struct dirent *entry;
@@ -65,7 +53,9 @@ void log_command(const char *command) {
     char time_str[64];
     strftime(time_str, sizeof(time_str), "%Y-%m-%d %H:%M:%S", localtime(&now));
 
-    fprintf(file, "[%s] %s\n", time_str, command);
+    if (!fprintf(file, "[%s] %s\n", time_str, command)){
+        printf("Error : log have not be print\n");
+    }
     fclose(file);
 }
 
@@ -93,7 +83,7 @@ void clear_all_logs() {
 }
 
 void display_all_logs() {
-    DIR *d = opendir(".");
+    DIR *d = opendir("log_folder");
     struct dirent *entry;
 
     if (!d) {
@@ -102,7 +92,7 @@ void display_all_logs() {
     }
 
     while ((entry = readdir(d)) != NULL) {
-        // Vérifie si le fichier commence par "log_"
+        // Iterate through directory entries to find log files
         if (strncmp(entry->d_name, LOG_PREFIX, strlen(LOG_PREFIX)) == 0) {
             FILE *file = fopen(entry->d_name, "r");
             if (!file) {

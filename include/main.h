@@ -12,11 +12,11 @@
 #define MAX_ARGS 20
 #define MAX_INPUT 256
 #define MAX_FILENAME 128
-#define MAX_LINES 5
-#define ALLOWED_SIZE 9
+#define MAX_LINES 200
+#define ALLOWED_SIZE 12
 #define EXIT_CODE 999
 #define LOG_PREFIX "log_folder/log_"
-
+#define VERSION "0.01"
 
 
 

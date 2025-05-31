@@ -1,4 +1,6 @@
 #include "main.h"
+#include "logs.h"
+#include "file.h"
 
 int is_allowed_command(const char *cmd) {
     if (!cmd){
@@ -13,12 +15,37 @@ int is_allowed_command(const char *cmd) {
     return 0; // not allowed
 }
 
+
+
 void print_available_commands() {
     printf("Available commands:\n");
     for (int i = 0; i < ALLOWED_SIZE; i++) {
         printf("  %s ", ALLOWED_COMMANDS[i]);
     }
     printf("\n");
+}
+
+int exe_cmd( char *args[]){
+    if (!args || !args[0]){
+        fprintf(stderr, "No command to execute.\n");
+        return -1;
+    }
+    // Fork and execute
+    pid_t pid = fork();
+    if (pid < 0) {
+        perror("fork failed");
+        return -1;
+    }
+    if (pid == 0) {
+        execvp(args[0], args);
+        perror("execvp failed");
+        exit(1);
+    } else {
+        int status;
+        waitpid(pid, &status, 0);
+        log_command(args[0]);
+        return WIFEXITED(status) ? WEXITSTATUS(status) : -1;
+    }
 }
 
 int run_command(char *input_line) {
@@ -55,6 +82,17 @@ int run_command(char *input_line) {
         clear_all_logs();
         return 1;
     }
+    if (strcmp(args[0],"version") == 0){
+        printf("%s\n",VERSION);
+        return 1;
+    }
+    if (strcmp(args[0],"aboutme") == 0){
+        print_file("README.md");
+        return 1;
+    }
+    if (strcmp(args[0],"showlogs") == 0){
+        display_all_logs();
+    }
     if (is_allowed_command(args[0]) == 0) {
         printf("Error: command '%s' not allowed\n", args[0]);
         return 1;
@@ -63,21 +101,18 @@ int run_command(char *input_line) {
         perror("error NULL pointeur");
         exit(0);
     }
+    // Built-in cd
+    if (strcmp(args[0], "cd") == 0) {
+        if (argc < 2) {
+            fprintf(stderr, "cd: missing operand\n");
+        } else {
+            if (chdir(args[1]) != 0) {
+                perror("cd");
+            }
+        }
+        return 1;
+    }
 
-    // Fork and execute
-    pid_t pid = fork();
-    if (pid < 0) {
-        perror("fork failed");
-        return -1;
-    }
-    if (pid == 0) {
-        execvp(args[0], args);
-        perror("execvp failed");
-        exit(1);
-    } else {
-        int status;
-        waitpid(pid, &status, 0);
-        log_command(args[0]);
-        return WIFEXITED(status) ? WEXITSTATUS(status) : -1;
-    }
+    exe_cmd(args); // run command if it's not an internal command
+    
 }

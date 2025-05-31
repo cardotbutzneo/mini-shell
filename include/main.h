@@ -4,6 +4,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include "sys/stat.h"
 #include <dirent.h>
 #include <limits.h>
 
@@ -11,7 +12,6 @@
 #define MAIN_H
 
 #define MAX_ARGS 20
-#define MAX_INPUT 256
 #define MAX_FILENAME 128
 #define MAX_LINES 200
 #define ALLOWED_SIZE 13
@@ -32,4 +32,4 @@ int run_command(char *input_line);
 void log_command(const char *command);
 void clear_all_logs();
 
-#endif MAIN_H
+#endif 

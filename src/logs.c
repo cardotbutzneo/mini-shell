@@ -1,4 +1,5 @@
 #include "main.h"
+#include "file.h"
 
 void init_log_folder_path() {
     if (!getcwd(LOG_FOLDER_PATH, sizeof(LOG_FOLDER_PATH))) {
@@ -6,6 +7,15 @@ void init_log_folder_path() {
         exit(1);
     }
     strcat(LOG_FOLDER_PATH, "/log_folder");
+
+    // Crée le dossier s'il n'existe pas
+    struct stat st = {0};
+    if (stat(LOG_FOLDER_PATH, &st) == -1) {
+        if (mkdir(LOG_FOLDER_PATH, 0700) != 0) {
+            perror("mkdir failed");
+            exit(1);
+        }
+    }
 }
 
 int find_last_log_index() {

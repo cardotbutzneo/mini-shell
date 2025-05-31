@@ -114,10 +114,6 @@ int run_command(char *input_line) {
         log_command(args[0]); // write the last cmd
         return 1;
     }
-    if (!args){
-        perror("error NULL pointeur");
-        exit(0);
-    }
     // Built-in cd
     if (strcmp(args[0], "cd") == 0) {
         if (argc < 2) {
@@ -137,5 +133,6 @@ int run_command(char *input_line) {
     }
 
     exe_cmd(args); // run command if it's not an internal command
+    return 0;
     
 }

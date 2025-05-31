@@ -1,0 +1,7 @@
+echo - display a line of text
+
+Usage:
+  echo [text]
+
+Description:
+  Prints the text provided as arguments.

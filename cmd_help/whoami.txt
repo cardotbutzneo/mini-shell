@@ -1,0 +1,7 @@
+whoami - print the current user id
+
+Usage:
+  whoami
+
+Description:
+  Prints the username of the current user.

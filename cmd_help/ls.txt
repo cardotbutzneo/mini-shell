@@ -1,0 +1,7 @@
+ls - list directory contents
+
+Usage:
+  ls
+
+Description:
+  Displays the names of files and directories in the current working directory.

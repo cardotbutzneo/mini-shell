@@ -1,0 +1,7 @@
+showlogs - display logs from all log files
+
+Usage:
+  showlogs
+
+Description:
+  Reads and prints the content of all command log files.

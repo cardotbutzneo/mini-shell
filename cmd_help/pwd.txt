@@ -1,0 +1,7 @@
+pwd - print working directory
+
+Usage:
+  pwd
+
+Description:
+  Displays the full path to the current working directory.

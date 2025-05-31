@@ -2,7 +2,7 @@
 #include "logs.h"
 
 /*List of allowed commands*/
-const char *ALLOWED_COMMANDS[] = {"ls", "cat", "whoami", "date", "pwd", "echo","clear","cd","clogs","version","aboutme","showlogs"};
+const char *ALLOWED_COMMANDS[] = {"ls", "cat", "whoami", "date", "pwd", "echo","clear","cd","clogs","version","aboutme","showlogs","help"};
 char LOG_FOLDER_PATH[PATH_MAX];
 
 int main(){

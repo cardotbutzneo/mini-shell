@@ -1,0 +1,7 @@
+cat - concatenate and display files
+
+Usage:
+  cat <filename>
+
+Description:
+  Displays the contents of the specified file.

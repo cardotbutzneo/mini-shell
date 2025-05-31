@@ -1,0 +1,33 @@
+Mini-Shell - Command Help Index
+===============================
+
+This shell supports the following built-in commands.
+Use `help <command>` to display detailed help.
+
+Available Commands:
+-------------------
+cd        - Change current working directory
+ls        - List files in the current directory
+cat       - Display content of a file
+pwd       - Print current directory
+echo      - Display a message or value
+clear     - Clear the terminal screen
+whoami    - Show the current user name
+date      - Show current date and time
+clogs     - Clear all log files
+showlogs  - Display all logs recorded
+version   - Display the shell version
+aboutme   - Information about the shell author
+
+Usage:
+------
+  showhelp <command>     Show help for a specific command
+  help                   Display this help index
+
+Examples:
+---------
+  showhelp cd
+  showhelp ls
+
+For more information, consult the individual help files in this folder.
+

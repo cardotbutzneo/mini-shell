@@ -1,0 +1,7 @@
+version - show shell version
+
+Usage:
+  version
+
+Description:
+  Displays the current version of the shell.

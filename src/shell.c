@@ -2,6 +2,7 @@
 #include "logs.h"
 #include "file.h"
 
+
 int is_allowed_command(const char *cmd) {
     if (!cmd){
         perror("NULL pointeur");
@@ -76,8 +77,18 @@ int run_command(char *input_line) {
 
     // Built-in help
     if (strcmp(args[0], "help") == 0) {
-        print_available_commands();
-        log_command(args[0]); // write the last cmd
+        char filepath[MAX_FILENAME];
+        
+        if (argc == 1){
+            snprintf(filepath, sizeof(filepath), "cmd_help/help.txt");
+            print_file(filepath);
+            log_command(args[0]);
+        }
+        else if (argc > 1) {
+            snprintf(filepath, sizeof(filepath), "cmd_help/%s.txt", args[1]);
+            print_file(filepath);
+            log_command(args[0]);
+        }
         return 1;
     }
     if (strcmp(args[0],"clogs") == 0){

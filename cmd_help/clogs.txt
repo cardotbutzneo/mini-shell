@@ -1,0 +1,7 @@
+clogs - clear all log files
+
+Usage:
+  clogs
+
+Description:
+  Deletes all log files created by the shell.

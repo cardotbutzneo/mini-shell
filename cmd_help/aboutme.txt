@@ -1,0 +1,7 @@
+aboutme - information about the shell author
+
+Usage:
+  aboutme
+
+Description:
+  Displays information about the developer of this shell.

@@ -13,7 +13,7 @@
 
 #define MAX_ARGS 20
 #define MAX_FILENAME 128
-#define MAX_LINES 200
+#define MAX_LINES 200 // modify this line if you want to have less log in each logfile
 #define ALLOWED_SIZE 13
 #define EXIT_CODE 999
 #define LOG_PREFIX "log_folder/log_"

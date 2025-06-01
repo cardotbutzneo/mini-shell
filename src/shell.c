@@ -92,8 +92,33 @@ int run_command(char *input_line) {
         return 1;
     }
     if (strcmp(args[0],"clogs") == 0){
-        clear_all_logs();
-        return 1;
+        char rep;
+        int verif = -1;
+        printf("are you sure to delate all logfile ? This action is unreversible. Default cas is N (Y/N)");
+        do{
+            verif = scanf("%c",&rep);
+            if (verif != 1){
+                printf("Error : not allow caractere\n");
+                verif = -1;
+            }
+            if (rep == '\n'){
+                rep = 'N';
+                break;
+            }
+            if (rep != 'N' || rep != 'Y'){
+                printf("Error : wrong caractere\n");
+                verif = -1;
+            }
+            void_buffer_scanf();
+        }while(verif != 1 && rep != 'N' || rep != 'Y');
+        if (rep == 'N'){
+            return 1;
+        }
+        else{
+            clear_all_logs();
+            return 1;
+        }
+        
     }
     if (strcmp(args[0],"version") == 0){
         printf("%s\n",VERSION);

@@ -1,6 +1,10 @@
 #include "main.h"
 #include "file.h"
 
+void void_buffer_scanf(){
+    while(getchar() != '\0');
+}
+
 int count_lines(FILE *file) {
     int count = 0;
     int ch;
